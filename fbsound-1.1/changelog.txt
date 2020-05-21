@@ -1,0 +1,27 @@
+fbsound 1.1: 
+is a dynmaic lib now
+
+fbsound 1.0: 
+first full 32/64-bit version
+
+fbSound 0.20
+added: win32/libogg.a win32/libvorbis.a win32/libvorbisfile.a
+new:   fbs_Load_OGGFile()
+
+fbSound 0.19
+added:   DirectSound driver plug-ds.dll
+changed: one more optional param for fbs_Init([nRate],[nChannels],[nBuffers],[nFrames],[PlugIndex],[DeviceIndex]) 
+
+fbSound 0.18:
+added: win32/libdumb.a lin32/libdumb.a
+new:   fbs_Load_MODFile() (*.mod, *.it, *.xm, *.s3m)
+
+fbSound 0.17:
+added:
+fbs_Set_LoadCallback(),
+fbs_Enable_LoadCallback(),
+fbs_Disable_LoadCallback(). 
+
+
+
+
