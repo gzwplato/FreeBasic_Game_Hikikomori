@@ -3,6 +3,7 @@
 randomize timer
 dim shared as integer timePass
 redim shared newsbla(0) as string
+dim shared as integer hWave
 
 'append to the string array the string item
 SUB sAppend (arr() AS STRING, item AS STRING)
@@ -25,21 +26,21 @@ function _
   getKeys( _
     byref keysToCatch as const string ) _
   as string
-  
+
   dim as string _
     k
-  
+
   do
     k => inkey()
-    
+
     sleep( 1, 1 )
   loop until( inStr( keysToCatch, k ) )
-  
+
   '' Clear keyboard buffer
   do while( len( inkey() ) > 0 )
     sleep( 1, 1 )
   loop
-  
+
   return( k )
 end Function
 
@@ -60,10 +61,10 @@ Function dates1 (months As Integer) As String
       "October", _
       "November", _
       "December" }
-    
+
     dim as integer _
       m => ( months + 11 ) mod 12
-    
+
     return( monthNames( m ) & "," & str( int( ( months - 1 ) / 12 ) + 1997 ) )
 END Function
 
@@ -71,7 +72,7 @@ sub slow (text as String )
   DIM as integer speed(0 to 4) => {50,100,20,1000,1500}
   for i as integer = 1 to len(text)
   print mid(text, i, 1);
-SLEEP 100'speed(INT(RND*ubound(speed))) 
+SLEEP 100'speed(INT(RND*ubound(speed)))
 next
 end sub
 
@@ -86,11 +87,13 @@ line input #h, l
 sappend newsbla(), l
 wend
 close #h
+print "PRESS 'q' OR ESC TO STOP"
 do
 print newsbla(int(rnd* (ubound(newsbla)+1)))
+print
 sleep 3000
 k = inkey()
-loop until k = chr(27)
+loop until k = chr(27) or k = "q"
 end sub
 
 sub txtfile(f as string)
@@ -101,10 +104,10 @@ cls
 	buffer = space(lof(1))
 	get #h,,buffer
 	close #h
-	
 
-	'~ slow buffer
 	print buffer
+	sleep
+	fbs_Destroy_Wave(@hWave)
 end sub
 
 
@@ -112,7 +115,7 @@ end sub
 Sub sound(f As String, t as integer)
 	Dim as boolean ok
 	ok=fbs_Init()
-	Dim as integer hWave
+'	Dim as integer hWave
 	fbs_Load_WAVFile(f,@hWave)
 	fbs_Play_Wave(hWave, t)
 	if inkey<>"" then
@@ -120,6 +123,21 @@ Sub sound(f As String, t as integer)
    endif
 end sub
 
+sub dreams()
+dim as integer numbers(0 to 2) => {0,1,2}
+dim index as integer
+index = numbers(int(rnd*(ubound(numbers) +1)))
+cls
+if index = 0 then
+sound("dream1.wav", 3)
+txtfile("dream.txt")
+elseif index = 1 then
+print "dream number 2"
+elseif index = 2 then
+print "dream number 3"
+endif
+sleep
+end sub
 
 sub music()
 cls
@@ -128,11 +146,17 @@ txtfile("music.txt")
 sleep
 end sub
 
+sub outside()
+sound("walk1.wav", 2)
+txtfile("walk1.txt")
+
+end sub
+
 
 sub opening()
 
 screenres 800, 600, 32
-sound("sabrina.wav", 2) 
+sound("sabrina.wav", 2)
 Dim As Any Ptr bild
 Dim As string datei
 Dim As Integer breite, hoehe
@@ -189,8 +213,12 @@ news()
 elseif k = "3" then
 music()
 elseif k ="1" then
-timePass += 1
-goto exitif
+'timePass += 1
+'goto exitif
+dreams()
+elseif k = "5" then
+outside()
+
 end if
 
 
