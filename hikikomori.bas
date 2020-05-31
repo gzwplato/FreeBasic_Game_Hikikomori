@@ -5,7 +5,8 @@ randomize timer
 dim shared as integer timePass
 redim shared newsbla(0) as string
 dim shared as integer hWave
-dim shared counter as integer
+dim shared counter as integer 
+dim shared songcounter as integer
 CONST punctuation = "?!,.:;<>(){}[]"
 DIM SHARED Greeting AS STRING, You AS STRING, Script AS String
 DIM SHARED kCnt AS INTEGER, rCnt AS INTEGER, wCnt AS INTEGER, NoKeyFoundIndex AS INTEGER
@@ -47,12 +48,7 @@ libvlc_media_player_stop(player)
 libvlc_media_player_release(player)
 libvlc_release(instance)
 
-
-
 end sub
-
-
-
 
 'append to the string array the string item
 SUB sAppend (arr() AS STRING, item AS STRING)
@@ -293,33 +289,34 @@ Function dates1 (months As Integer) As String
     return( monthNames( m ) & "," & str( int( ( months - 1 ) / 12 ) + 1997 ) )
 END Function
 
-'SUB upper (f as string)
-'	redim lines(0) as string
-'	dim as integer r,c, i
-'	dim fline as string
-'	OPEN f FOR INPUT AS #1
-'	WHILE Not EOF(1)
-'        LINE INPUT #1, fline
-'		sAppend lines(), fline		
-'    wend
-'	close #1
-'r= 35
-'c = 5	
-'i = 0
-'	DO
-        
-'        LOCATE r, c
-'        PRINT lines(i)
-'       _	sleep(100)
-'        r = r - 1
-'		i = i + 1
-'    LOOP UNTIL r = 3 
+SUB upper (f as string)
+	cls
+	redim lines(0) as string
+	dim h as long = freefile()
+	dim as integer r =35,c =30
+	dim fline as string
+	OPEN f FOR INPUT AS #h
+	WHILE Not EOF(h)
+        LINE INPUT #h, fline
+		sAppend lines(), fline		
+    wend
+	close #h
 
-
-'Sleep
-
-
-'end sub
+	dim as integer hi = hiword(width()) 'num columns on display
+   'print closing credits
+   for i as integer = 0 to ubound(lines)
+      locate hi, 10
+      print lines(i)
+      sleep 500
+   next
+   'clear screen
+   for i as integer = 1 to hi
+      print
+      sleep 500
+   next
+   print "End"
+	getkey()
+end sub
 
 sub news()
 dim l as string, h as integer
@@ -346,7 +343,7 @@ cls
 	dim as string buffer
 	dim h as long = freefile()
 	open f for binary as #h
-	buffer = space(lof(1))
+	buffer = space(lof(h))
 	get #h,,buffer
 	close #h
 
@@ -395,17 +392,32 @@ sub email()
 	sleep
 end sub
 
-'sub ending()
-'	cls
-'	upper("ending_titels.txt")
+
+sub guitar()
+
+if songcounter = 0 then
+sound("pray_song.wav",1)
+txtfile("guitar1.txt")
+songcounter += 1
+elseif songcounter = 1 then
+sound("love_song.wav",1)
+txtfile("guitar2.txt")
+songcounter += 1
+elseif songcounter = 2 then
+sound("blues_song.wav", 1)
+txtfile("guitar3.txt")
 
 
-'end sub
+
+endif
+
+end sub
+
 
 sub dreams()
 'dim as integer numbers(0 to 2) => {0,1,2}
 dim index as integer
-index = (int(rnd*(2 + 1)))
+index = (int(rnd*(5)))
 cls
 if index = 0 then
 sound("dream1.wav", 3)
@@ -414,9 +426,16 @@ elseif index = 1 then
 sound("dream2.wav",3)
 txtfile("dream2.txt")
 elseif index = 2 then
-print "dream number 3"
+sound("walk1.wav", 3)
+txtfile("dream3.txt")
+elseif index = 3 then
+txtfile("nightmare1.txt")
+elseif index = 4 then
+sound("eddie.wav", 3)
+txtfile("eddie.txt")
+
 endif
-print index
+'print index
 sleep
 end sub
 
@@ -431,6 +450,16 @@ sub outside()
 sound("walk1.wav", 2)
 txtfile("walk1.txt")
 
+end sub
+
+sub warningscreen()
+screen 19
+dim k as string
+txtfile("warning.txt")
+k = getKeys("12")
+if k = "2" then
+end
+endif
 end sub
 
 
@@ -485,7 +514,7 @@ cp 12, "4. CHECK E-MAIL..."
 cp 14, "5. GO OUTSIDE..."
 cp 16, "6. JOIN A CHAT-ROOM ON THE NET..."
 cp 18, "7. READ A BOOK..."
-cp 20, "8. TAKE ACTION AND DO SOMETHING..."
+cp 20, "8. PLAY SOMETHING WITH YOUR GUITAR..."
 cp 22, "9. LISTEN TO THE NEWS..."
 cp 24, "PRESS ESC TO EXIT GAME..."
 k = getkeys("123456789" + CHR(27))
@@ -505,6 +534,8 @@ elseif k = "2" then
 playvideo("pacman.mp4")
 elseif k = "6" then
 conversation("chat1.txt")
+elseif k = "8" then
+guitar()
 end if
 
 
@@ -515,7 +546,7 @@ LOOP UNTIL k = chr(27)
 
 end sub
 
+warningscreen()
 opening()
 main()
-'ending()
-sleep
+upper("ending_titles.txt")
