@@ -25,6 +25,8 @@ name=dream1.wav
 name=dream2.txt
 name=dream2.wav
 name=dream3.txt
+name=eddie.txt
+name=eddie.wav
 name=email1.txt
 name=email1.wav
 name=ending_titles.txt
@@ -46,8 +48,6 @@ name=startpoint.txt
 name=walk1.txt
 name=walk1.wav
 name=warning.txt
-name=eddie.txt
-name=eddie.wav
 [Focus]
 title=<null>
 target=hikikomori_game

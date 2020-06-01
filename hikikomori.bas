@@ -7,11 +7,35 @@ redim shared newsbla(0) as string
 dim shared as integer hWave
 dim shared counter as integer 
 dim shared songcounter as integer
-CONST punctuation = "?!,.:;<>(){}[]"
-DIM SHARED Greeting AS STRING, You AS STRING, Script AS String
-DIM SHARED kCnt AS INTEGER, rCnt AS INTEGER, wCnt AS INTEGER, NoKeyFoundIndex AS INTEGER
-REDIM SHARED keywords(0) AS STRING, replies(0) AS STRING, wordIn(0) AS STRING, wordOut(0) AS STRING
-REDIM SHARED rStarts(0) AS INTEGER, rEnds(0) AS INTEGER, rIndex(0) AS INTEGER
+
+type PERSON
+	public:
+	dim intext as string
+	CONST punctuation = "?!,.:;<>(){}[]"
+	dim Greeting AS STRING
+	dim You AS STRING
+	dim Script AS String
+	dim kCnt AS INTEGER
+	dim rCnt AS INTEGER
+	dim wCnt AS INTEGER
+	dim NoKeyFoundIndex AS INTEGER
+	REDIM keywords(0) AS STRING
+	redim replies(0) AS STRING
+	redim wordIn(0) AS STRING
+	redim wordOut(0) AS STRING
+	REDIM rStarts(0) AS INTEGER
+	redim rEnds(0) AS INTEGER
+	redim rIndex(0) AS INTEGER
+	
+	
+	declare SUB sAppend (arr() AS STRING, item AS STRING)
+	declare SUB nAppend (arr() AS INTEGER, item AS INTEGER)
+	declare SUB LoadArrays (scriptFile AS STRING)
+	declare FUNCTION isolatePunctuation (s AS STRING) as string
+	declare FUNCTION joinPunctuation (s AS STRING) as String
+	declare FUNCTION GetReply (rply2 as string, switch as integer) as string
+	declare SUB speakTotext (lines as string)
+end type
 
 
 
@@ -61,8 +85,20 @@ SUB nAppend (arr() AS INTEGER, item AS INTEGER)
     arr(UBOUND(arr)) = item
 end sub
 
+'append to the string array the string item
+SUB PERSON.sAppend (arr() AS STRING, item AS STRING)
+    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
+    arr(UBOUND(arr)) = item
+END SUB
+
+'append to the integer array the integer item
+SUB PERSON.nAppend (arr() AS INTEGER, item AS INTEGER)
+    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
+    arr(UBOUND(arr)) = item
+END SUB
+
 ' pull data out of some script file
-SUB LoadArrays (scriptFile AS STRING)
+SUB PERSON.LoadArrays (scriptFile AS STRING)
     DIM startR AS INTEGER, endR AS INTEGER, ReadingR AS INTEGER, temp AS INTEGER
     DIM fline AS STRING, kWord AS STRING
     OPEN scriptFile FOR INPUT AS #1
@@ -75,12 +111,12 @@ SUB LoadArrays (scriptFile AS STRING)
             CASE "s:"
                 wCnt = wCnt + 1: temp = INSTR(fline, ">")
                 IF temp THEN
-                    sAppend wordIn(), " " + Trim(MID(fline, 3, temp - 3)) + " "
-                    sAppend wordOut(), " " + Trim(MID(fline, temp + 1)) + " "
+                    this.sAppend wordIn(), " " + Trim(MID(fline, 3, temp - 3)) + " "
+                    this.sAppend wordOut(), " " + Trim(MID(fline, temp + 1)) + " "
                 END IF
             CASE "r:"
                 rCnt = rCnt + 1
-                sAppend replies(), Trim(MID(fline, 3))
+                this.sAppend replies(), Trim(MID(fline, 3))
                 IF NOT ReadingR THEN
                     ReadingR = -1
                     startR = rCnt
@@ -93,10 +129,10 @@ SUB LoadArrays (scriptFile AS STRING)
                 IF rCnt THEN
                     kCnt = kCnt + 1
                     kWord = Trim(MID(fline, 3))
-                    sAppend keywords(), " " + kWord + " "
-                    nAppend rStarts(), startR
-                    nAppend rIndex(), startR
-                    nAppend rEnds(), endR
+                    this.sAppend keywords(), " " + kWord + " "
+                    this.nAppend rStarts(), startR
+                    this.nAppend rIndex(), startR
+                    this.nAppend rEnds(), endR
                     IF kWord = "nokeyfound" THEN NoKeyFoundIndex = kCnt
                 END IF
             CASE "e:": EXIT WHILE
@@ -106,16 +142,16 @@ SUB LoadArrays (scriptFile AS STRING)
     IF ReadingR THEN 'handle last bits
         endR = rCnt
         kCnt = kCnt + 1
-        sAppend keywords(), "nokeyfound"
-        nAppend rStarts(), startR
-        nAppend rIndex(), startR
-        nAppend rEnds(), endR
+        this.sAppend keywords(), "nokeyfound"
+        this.nAppend rStarts(), startR
+        this.nAppend rIndex(), startR
+        this.nAppend rEnds(), endR
         NoKeyFoundIndex = kCnt
     END IF
 END SUB
 
 
-FUNCTION isolatePunctuation (s AS STRING) as string
+FUNCTION PERSON.isolatePunctuation (s AS STRING) as string
     'isolate punctuation so when we look for key words they don't interfere
     DIM b AS STRING, i AS INTEGER
     b = ""
@@ -125,7 +161,7 @@ FUNCTION isolatePunctuation (s AS STRING) as string
     isolatePunctuation = b
 END FUNCTION
 
-FUNCTION joinPunctuation (s AS STRING) as String
+FUNCTION PERSON.joinPunctuation (s AS STRING) as String
     'undo isolatePuntuation$
     DIM b AS STRING, find AS STRING, i AS INTEGER, place AS INTEGER
     b = s
@@ -145,17 +181,22 @@ FUNCTION joinPunctuation (s AS STRING) as String
 END Function
 
 ' =============================== here is the heart of ELIZA / Player function
-FUNCTION GetReply () as string
+FUNCTION PERSON.GetReply (rply2 as string, switch as integer) as string
     DIM inpt AS STRING, tail AS STRING, answ AS STRING
     DIM kFlag AS INTEGER, k AS INTEGER, kFound AS INTEGER, l AS INTEGER, w AS INTEGER
-
-    ' USER INPUT SECTION
+	if switch = 0 then
+		
+	' USER INPUT SECTION
+	rply2 = ""
     PRINT You + ": ";: LINE INPUT "", inpt
     IF LCASE(inpt) = "q" OR LCASE(inpt) = "x" OR LCASE(inpt) = "goodbye" OR LCASE(inpt) = "good night" OR LCASE(inpt) = "bye" THEN
         GetReply = "Goodbye!": EXIT FUNCTION
     END IF
+	else
+    inpt = rply2
+	endif
     inpt = " " + inpt + " " '<< need this because keywords embedded in spaces to ID whole words only
-    inpt = isolatePunctuation(inpt)
+    inpt = this.isolatePunctuation(inpt)
     FOR k = 1 TO kCnt 'loop through key words until we find a match
         kFound = INSTR(LCASE(inpt), LCASE(keywords(k)))
         IF kFound > 0 THEN '>>> need the following for * in some replies
@@ -183,9 +224,9 @@ FUNCTION GetReply () as string
     END IF
     IF RIGHT(answ, 1) <> "*" THEN GetReply = answ: EXIT FUNCTION 'oh so the * signal an append to reply!
     If Trim(tail) = "" THEN
-        GetReply = "is that all you got to say? " 
+        GetReply = "Please elaborate on, " + keywords(k)
     ELSE
-        tail = joinPunctuation(tail)
+        tail = this.joinPunctuation(tail)
         GetReply = MID(answ, 1, LEN(answ) - 1) + tail
     END IF
 END FUNCTION
@@ -198,21 +239,15 @@ sub slow (text as String )
    next
 end sub
 
-SUB speakTotext (lines as string) 'uses voice command line voice.exe
+SUB PERSON.speakTotext (lines as string) 'uses voice command line voice.exe
     PRINT Script & ": ";:slow  lines :print :print
-'    Shell("voice -r -1 -n " & Chr(34) & TTSvoice & Chr(34) & " " & Chr(34) & lines & Chr(34))
-    'SHELL _HIDE "espeak -ven-us+f2 -s150 " + CHR$(34) + lines$ + CHR$(34)
+
 END Sub
-
-sub restart()
-   REDIM keywords(0) AS STRING, replies(0) AS STRING, wordIn(0) AS STRING, wordOut(0) AS STRING
-   REDIM rStarts(0) AS INTEGER, rEnds(0) AS INTEGER, rIndex(0) AS INTEGER
-
-end sub
 
 sub conversation(file as String)
    dim i as Integer
-   restart()
+   'restart()
+   dim kenzu as person
 '   sound("./icq-horn.wav")
    cls
    for i = 1 to 10
@@ -224,12 +259,13 @@ sub conversation(file as String)
       sleep 250
    next
    cls
-   DIM rply AS STRING '              for main loop
-   LoadArrays file '   check file load, OK checks out
-   PRINT Greeting: PRINT '           start testing main Eliza code
+   DIM rply AS STRING
+   dim rply3 as string'              for main loop
+   kenzu.LoadArrays file '   check file load, OK checks out
+   PRINT kenzu.Greeting: PRINT '           start testing main Eliza code
    DO
-      rply = GetReply
-      PRINT: speakTotext rply
+      rply = kenzu.GetReply(rply3, 0)
+      PRINT: kenzu.speakTotext rply
    LOOP UNTIL rply = "Goodbye!"
    cls
    locate 5, 5
