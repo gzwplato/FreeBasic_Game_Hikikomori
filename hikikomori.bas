@@ -1,6 +1,6 @@
-#include once "./FBTrueType/FBTrueType.bi"
-#include "./fbsound-1.1/inc/fbsound_dynamic.bi"
-#include once "vlc/vlc.bi"
+#include once ".\FBTrueType\FBTrueType.bi"
+#include ".\fbsound-1.1\inc\fbsound_dynamic.bi"
+'#include once "vlc/vlc.bi"
 randomize timer
 dim shared as integer timePass
 redim shared newsbla(0) as string
@@ -39,40 +39,40 @@ end type
 
 
 
-sub playvideo(f as string)
-cls
-dim as string TEST = f
-'chdir exepath() 
-var instance = libvlc_new (0, NULL)
-var media    = libvlc_media_new_path (instance,TEST)
-var player   = libvlc_media_player_new_from_media (media)
-libvlc_media_release(media)
-libvlc_media_player_play(player)
-dim as long w,h,l,timeout=2000 ' 2 seconds
-print "wait on start ..."
-while w=0 andalso h=0 andalso l=0 andalso timeout>=0
-  w = libvlc_video_get_width(player)
-  h = libvlc_video_get_height(player)
-  l = libvlc_media_player_get_length(player)
-  sleep 100 : timeout-=100
-wend
-if timeout<0 then
-  libvlc_media_player_release(player)
-  libvlc_release(instance)
-  ?:?:?
-  print "play back not started !"
-  print "error log: in console ?"
-  beep:sleep:end
-end if
-print "size: " & w & " x " & h & " length: " & l\1000
-print "playing ..."
-print "sleep press any key"
-sleep
-libvlc_media_player_stop(player)
-libvlc_media_player_release(player)
-libvlc_release(instance)
+'sub playvideo(f as string)
+'cls
+'dim as string TEST = f
+''chdir exepath() 
+'var instance = libvlc_new (0, NULL)
+'var media    = libvlc_media_new_path (instance,TEST)
+'var player   = libvlc_media_player_new_from_media (media)
+'libvlc_media_release(media)
+'libvlc_media_player_play(player)
+'dim as long w,h,l,timeout=2000 ' 2 seconds
+'print "wait on start ..."
+'while w=0 andalso h=0 andalso l=0 andalso timeout>=0
+'  w = libvlc_video_get_width(player)
+'  h = libvlc_video_get_height(player)
+'  l = libvlc_media_player_get_length(player)
+'  sleep 100 : timeout-=100
+'wend
+'if timeout<0 then
+'  libvlc_media_player_release(player)
+'  libvlc_release(instance)
+'  ?:?:?
+'  print "play back not started !"
+'  print "error log: in console ?"
+'  beep:sleep:end
+'end if
+'print "size: " & w & " x " & h & " length: " & l\1000
+'print "playing ..."
+'print "sleep press any key"
+'sleep
+'libvlc_media_player_stop(player)
+'libvlc_media_player_release(player)
+'libvlc_release(instance)
 
-end sub
+'end sub
 
 'append to the string array the string item
 SUB sAppend (arr() AS STRING, item AS STRING)
@@ -527,7 +527,7 @@ end sub
 
 sub music()
 cls
-sound("./fbsound-1.1/data/fbsloop44.wav", 5)
+sound(".\fbsound-1.1\data\fbsloop44.wav", 5)
 txtfile("music.txt")
 sleep
 end sub
@@ -557,7 +557,7 @@ Dim As Any Ptr bild
 Dim As string datei
 Dim As Integer breite, hoehe
 
-datei = "./hikpic.bmp"
+datei = "hikpic.bmp"
 breite = 800
 hoehe = 600
 
@@ -569,7 +569,7 @@ Sleep
 
 ImageDestroy(bild)
 
-var font = FontLoad("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf")
+var font = FontLoad(".\fonts\Montserrat-Bold.ttf")
 
 dim as string word = "A GAME BY RON77"
 dim s as string = "HIKIKOMORY"
@@ -617,7 +617,7 @@ outside()
 elseif k ="4" then
 email()
 elseif k = "2" then
-playvideo("pacman.mp4")
+'playvideo("pacman.mp4")
 elseif k = "6" then
 'conversation("chat1.txt")
 chatroom()
