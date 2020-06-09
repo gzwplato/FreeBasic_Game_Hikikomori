@@ -1,0 +1,55 @@
+g:WELCOME TO YUKA-YUKA CHAT! PRESS 'q' TO QUIT CONVERSATION
+y:You(guest118)
+c:yuka_guide142
+s:are>am|are
+s:am>are
+s:were>was|were
+s:was>were
+s:you>I|me
+s:I>you
+s:your>my
+s:my>your
+s:I've>you've
+s:you've>I've
+s:I'm>you're
+s:you're>I'm
+s:me>you
+
+r:hello i'm the guide of the yuka chat support group feel free to chat with us
+r:hello and welcome please tell us abit about yourself
+r:hello and welcome to yuka chat support group
+k:hi
+k:hello
+k:what's up
+k:whats up
+
+r:don't worry we are not here to judge you we all are like you and understand what you are going through
+r:it's okay no one here will judge you we all here are struggle
+k:don't like support groups
+k:not good at support groups
+
+r:my name is stephan i'm 45 years old and i have been isolated for 18 years in my house i'm an ex-hikikomori and now i help others here at the yuka centre
+k:who are you
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+r:really? i'm all ears
+r:go on i'm listening
+r:that's interesting
+k:nokeyfound
+e:

@@ -247,7 +247,7 @@ END Sub
 sub conversation(file as String)
    dim i as Integer
    'restart()
-   dim kenzu as person
+   dim kenzu as PERSON
 '   sound("./icq-horn.wav")
    cls
    for i = 1 to 10
@@ -272,6 +272,54 @@ sub conversation(file as String)
    print "disconnected...  "
    sleep
 end sub
+
+SUB chatroom()
+	dim i as Integer
+   
+   dim guide as PERSON
+   DIM mike AS PERSON
+   DIM ken AS PERSON
+
+   cls
+   for i = 1 to 10
+      locate 5, 5
+      print "             ";
+      sleep 250
+      locate 5, 5
+      print "connecting...";
+      sleep 250
+   next
+   cls
+	DIM in AS STRING
+   DIM rply AS STRING
+   dim rply2 as string'              for main loop
+   DIM rply3 AS STRING
+   guide.LoadArrays "yuka_guide.txt" '   check file load, OK checks out
+   mike.LoadArrays "mike.txt"
+   ken.LoadArrays "ken.txt"
+   PRINT guide.Greeting: PRINT '           start testing main Eliza code
+   DO
+      PRINT: PRINT guide.You + ": ";: LINE INPUT "", in
+    IF LCASE(in) = "q" OR LCASE(in) = "x" OR LCASE(in) = "goodbye" OR LCASE(in) = "good night" OR LCASE(in) = "bye" THEN
+	PRINT: PRINT: guide.speakTotext "Goodbye!"
+	EXIT do
+	ENDIF
+	rply = guide.GetReply(in, 1)
+	PRINT: guide.speakTotext rply
+	rply2 = mike.GetReply(in, 1)
+	PRINT:mike.speakTotext rply2
+	rply3 = ken.GetReply(in, 1)
+	PRINT: ken.speakTotext rply3
+      
+   LOOP UNTIL in = "bye"
+   cls
+   locate 5, 5
+   print "disconnected...  "
+   sleep
+
+
+
+END SUB
 
 sub cp (row as integer, s as string)
 
@@ -453,7 +501,7 @@ end sub
 sub dreams()
 'dim as integer numbers(0 to 2) => {0,1,2}
 dim index as integer
-index = (int(rnd*(5)))
+index = (int(rnd*(6)))
 cls
 if index = 0 then
 sound("dream1.wav", 3)
@@ -469,7 +517,9 @@ txtfile("nightmare1.txt")
 elseif index = 4 then
 sound("eddie.wav", 3)
 txtfile("eddie.txt")
-
+ELSEIF index = 5 THEN
+sound("dream1.wav",3)
+txtfile("dream_ta.txt")
 endif
 'print index
 sleep
@@ -569,7 +619,8 @@ email()
 elseif k = "2" then
 playvideo("pacman.mp4")
 elseif k = "6" then
-conversation("chat1.txt")
+'conversation("chat1.txt")
+chatroom()
 elseif k = "8" then
 guitar()
 end if

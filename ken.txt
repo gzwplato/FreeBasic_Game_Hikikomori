@@ -1,0 +1,48 @@
+
+y:You(guest118)
+c:ken_79
+s:are>am|are
+s:am>are
+s:were>was|were
+s:was>were
+s:you>I|me
+s:I>you
+s:your>my
+s:my>your
+s:I've>you've
+s:you've>I've
+s:I'm>you're
+s:you're>I'm
+s:me>you
+
+
+
+
+r:hello nice to meet you i'm ken
+k:hi
+k:hello
+k:what's up
+k:whats up
+
+
+r:give this group a chance :)
+r:don't be shay we know what it's like being alone...
+k:don't like support groups
+k:not good at support groups
+
+
+r:i'm 34 years old from london UK been alone since 20 years old i live with my mom
+k:who are you
+
+
+
+
+
+
+
+
+r:really? i'm all ears
+r:go on i'm listening
+r:that's interesting
+k:nokeyfound
+e:

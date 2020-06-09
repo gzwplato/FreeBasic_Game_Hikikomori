@@ -1,0 +1,48 @@
+
+y:You(guest118)
+c:mike_445
+s:are>am|are
+s:am>are
+s:were>was|were
+s:was>were
+s:you>I|me
+s:I>you
+s:your>my
+s:my>your
+s:I've>you've
+s:you've>I've
+s:I'm>you're
+s:you're>I'm
+s:me>you
+
+
+
+
+r:hi welcome to our little group i'm mike nice to meet you :)
+r:hi hello i'm mike :)
+k:hi
+k:hello
+k:what's up
+k:whats up
+
+r:we all go through the same things like you
+r:this is a place to speak freely we can understand you
+k:don't like support groups
+k:not good at support groups
+
+
+r:my name is mike i'm a loner for 7 years now in NYC USA living in my basemet apartment i'm 36 years old :)
+k:who are you
+
+
+
+
+
+
+
+
+r:really? i'm all ears
+r:go on i'm listening
+r:that's interesting
+k:nokeyfound
+e:

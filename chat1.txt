@@ -124,12 +124,12 @@ K:people
 k:normal
 k:normals
 
-r:i don't need "professional" help! i don't need teraphy! what i needed all my life was someone to give a shit about me and how i feel! someone who cares enough to be my true friend and not judge me and accept me the way i am! but people are too busy with themselves to do that so fuck them! fuck everything!
+r:i don't need "professional" help! i don't need therapy! what i needed all my life was someone to give a shit about me and how i feel! someone who cares enough to be my true friend and not judge me and accept me the way i am! but people are too busy with themselves to do that so fuck them! fuck everything!
 r:i don't need social workers pocking inside me so they can write reports on me and go on with their lives and forget about me cause they don't give a shit
 r:i'm not the problem! other people are the ones causing all the problems of the world
 r:there is nothing wrong with me it's society and regular "normal" people who are FUCKED UP! they should get treatment with lots of shots of drugs and electric shock and fucking medication!
 r:doctors get paid for drugging their patients they're nothing more then little drug pushers assholes
-k:teraphy
+k:therapy
 k:doctors
 k:support
 k:help
