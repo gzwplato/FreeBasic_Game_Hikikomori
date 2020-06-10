@@ -618,6 +618,7 @@ elseif k ="4" then
 email()
 elseif k = "2" then
 'playvideo("pacman.mp4")
+shell("start https://www.youtube.com/watch?v=-CbyAk3Sn9I&t=15s")
 elseif k = "6" then
 'conversation("chat1.txt")
 chatroom()

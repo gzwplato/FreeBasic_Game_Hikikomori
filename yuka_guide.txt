@@ -31,20 +31,53 @@ k:not good at support groups
 r:my name is stephan i'm 45 years old and i have been isolated for 18 years in my house i'm an ex-hikikomori and now i help others here at the yuka centre
 k:who are you
 
+r:you must remember that you are not truely alone you have your family and dear ones that care about you
+r:don't lose hope there is a way out from isolation back into society 
+r:feel free to share your feelings with us we are here to support you
+r:i hope in this chat you can feel less alone and comfortable to tell us more about you
+r:please tell us more about you
+r:we understand you cause we feel the same way... would you like to tell us more?
+k:i'm alone
+k:i am alone
+k:i feel alone
+k:i'm feeling lonely
+k:i am feeling lonely
+
+
+r:it is importent that you remember that you are not alone and there are people who care about you
+r:don't lose hope there is a way out from isolation back into society 
+r:my favorite quote is "the only thing we have to fear is fear itself"
+k:i'm scared
+k:i am scared
+k:i fear
+k:i worry
+
+r:making the first step is importent but withut professional help it is hard to go back to society that's why there are the yuka centres you can use 
+r:you have to start somewhere and what is a better place to start then the nearest yuka-yuka centre?
+r:we incourage you to try and go to the yuka-yuka centre near you you will finf there nice good people with good intensions
+r:going to a offline support group for hikikomoris could be a good first step to start and coming out to the world
+k:yuka
+k:help
+k:outside
 
 
 
+r:it is importent to sleep at regulars hours at night time if you plan to go back into society
+r:here it's evening where i am i sleep at nights at regular hours
+k:time
+k:am
+k:pm
+k:morning
+k:day
+k:evening
+k:night
+k:sleep
 
 
-
-
-
-
-
-
-
-
-
+r:when you will be ready i'm sure the yuka staff can help you find a job and earn money as income that why you will become independet
+k:job
+k:work
+k:money
 
 
 
