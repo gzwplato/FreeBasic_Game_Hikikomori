@@ -81,8 +81,32 @@ k:evening
 k:night
 k:sleep
 
-r:really? i'm all ears
-r:go on i'm listening
-r:that's interesting
+r:i miss having fun with my lost friends i bet thet don't even remember me if they ever think of me :(
+r:i miss the way i was before i became isolated i used to laugh smile be social have fun with my friends and my sweetheart now i feel like a half dead zombie :(
+r:one of my motivations to get better and succeed is to make my mom and dad happy and proud of me and show everyone that i'm not lost or doomed
+r:my family sends me money but i guess as far of hoping that i will succeed in getting out of isolation i think they gave up on me
+k:mom
+k:dad
+k:family
+k:friend
+k:friends
+k:parents
+k:brother
+k:sister
+
+
+r:i wish there was something i could do to help you but first i must help myself 
+r:been there felt that did that too :'(
+r:i hear you man it's tough being isolated people think we are week but no we are strong cause we have to go throw hell on our own
+r:we all go through these things every one of us... you are not the only one who expirience these things
+r:what can i say i think and feel sometimes exactly the same
+k:i am
+k:i'm
+k:i think
+k:i feel
+
+r:tell us more
+r::)
+r:we hear you man
 k:nokeyfound
 e:

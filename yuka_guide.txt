@@ -61,7 +61,7 @@ k:help
 k:outside
 
 
-
+r:when i was isolated i my sleep was irregular but i fixed it thank to will power
 r:it is importent to sleep at regulars hours at night time if you plan to go back into society
 r:here it's evening where i am i sleep at nights at regular hours
 k:time
@@ -79,10 +79,31 @@ k:job
 k:work
 k:money
 
+r:no point in griving over lost friends and lost girlfriends once you will go out to the world people will want to be your friend once more and love is possible outside of the walls of the room... don't lose hope :)
+r:friends that came and gone well they are no real family and they got their own lives but blood is thicker then wather i guess
+r:i would not succeed getting out of years of isolation with out my family and parent's support their love saved me
+r:there is a lot of stigma around being hikikomori people think we are different or dengerious or mentally ill or parasitic but that's not true at all remember you are cared and loved by your family or by someone
+r:family support is critical for getting out of isolation
+k:mom
+k:dad
+k:family
+k:friend
+k:friends
+k:parents
+k:brother
+k:sister
 
+r:go on we are listening
+r:it's not your fault it any case social isolation can happen to anyone for many reasons
+r:please go on we are listening to every word and understanding you we do not judge you or blame you
+k:i am
+k:i'm
+k:i think
+k:i feel
 
-r:really? i'm all ears
-r:go on i'm listening
+r:i'll let the others speak too
+r:how all of you feel about this subject?
+r:go on we are listening
 r:that's interesting
 k:nokeyfound
 e:

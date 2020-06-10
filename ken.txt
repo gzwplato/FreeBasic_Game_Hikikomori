@@ -78,8 +78,31 @@ k:job
 k:work
 k:money
 
-r:really? i'm all ears
-r:go on i'm listening
-r:that's interesting
+
+r:boys used to pick on me in school so... i never really had many friends just a few good ones who now are going on with their lives... and i'm stuck here... :(
+r:i wouldn't want to spend all my life like this isolated from people an from love... i had a girlfriend once i wonder where she is today and how is she...
+r:the room i'm in reminds me everyday of my childhood and growing up as a happy kid with my parents and my sister and brother i miss the good old times i hope iwill be able to get some of them back
+r:my parents are divorce but my mom and dad support me in every way thanks to them i'm not homeless but as for friends fuck them they never really cared for me!
+k:mom
+k:dad
+k:family
+k:friend
+k:friends
+k:parents
+k:brother
+k:sister
+
+
+r:go on dear one w hear you loud and clear...
+r:i'm glad you are open and shareing this with us i expirience the same things too i guess we all do that's what makes us human...
+r:you remind me so much of myself and my struggle... i wish i could give you a hug right now
+k:i am
+k:i'm
+k:i think
+k:i feel
+
+r:i think i can identifiy with what your saying
+r:sad but true :-/
+r:<3
 k:nokeyfound
 e:
