@@ -1,6 +1,6 @@
 #include once ".\FBTrueType\FBTrueType.bi"
 #include ".\fbsound-1.1\inc\fbsound_dynamic.bi"
-'#include once "vlc/vlc.bi"
+windowtitle("HIKIKOMORI GAME")
 randomize timer
 dim shared as integer timePass
 redim shared newsbla(0) as string
@@ -37,42 +37,6 @@ type PERSON
 	declare SUB speakTotext (lines as string)
 end type
 
-
-
-'sub playvideo(f as string)
-'cls
-'dim as string TEST = f
-''chdir exepath() 
-'var instance = libvlc_new (0, NULL)
-'var media    = libvlc_media_new_path (instance,TEST)
-'var player   = libvlc_media_player_new_from_media (media)
-'libvlc_media_release(media)
-'libvlc_media_player_play(player)
-'dim as long w,h,l,timeout=2000 ' 2 seconds
-'print "wait on start ..."
-'while w=0 andalso h=0 andalso l=0 andalso timeout>=0
-'  w = libvlc_video_get_width(player)
-'  h = libvlc_video_get_height(player)
-'  l = libvlc_media_player_get_length(player)
-'  sleep 100 : timeout-=100
-'wend
-'if timeout<0 then
-'  libvlc_media_player_release(player)
-'  libvlc_release(instance)
-'  ?:?:?
-'  print "play back not started !"
-'  print "error log: in console ?"
-'  beep:sleep:end
-'end if
-'print "size: " & w & " x " & h & " length: " & l\1000
-'print "playing ..."
-'print "sleep press any key"
-'sleep
-'libvlc_media_player_stop(player)
-'libvlc_media_player_release(player)
-'libvlc_release(instance)
-
-'end sub
 
 'append to the string array the string item
 SUB sAppend (arr() AS STRING, item AS STRING)
@@ -240,7 +204,7 @@ sub slow (text as String )
 end sub
 
 SUB PERSON.speakTotext (lines as string) 'uses voice command line voice.exe
-    PRINT Script & ": ";:slow  lines :print :print
+    PRINT Script & ": ";:slow  lines :print
 
 END Sub
 
@@ -501,25 +465,28 @@ end sub
 sub dreams()
 'dim as integer numbers(0 to 2) => {0,1,2}
 dim index as integer
-index = (int(rnd*(6)))
+index = (int(rnd*(7)))
 cls
 if index = 0 then
-sound("dream1.wav", 3)
-txtfile("dream.txt")
+   sound("dream1.wav", 3)
+   txtfile("dream.txt")
 elseif index = 1 then
-sound("dream2.wav",3)
-txtfile("dream2.txt")
+   sound("dream2.wav",3)
+   txtfile("dream2.txt")
 elseif index = 2 then
-sound("walk1.wav", 3)
-txtfile("dream3.txt")
+   sound("walk1.wav", 3)
+   txtfile("dream3.txt")
 elseif index = 3 then
-txtfile("nightmare1.txt")
+   txtfile("nightmare1.txt")
 elseif index = 4 then
-sound("eddie.wav", 3)
-txtfile("eddie.txt")
+   sound("eddie.wav", 3)
+   txtfile("eddie.txt")
 ELSEIF index = 5 THEN
-sound("dream1.wav",3)
-txtfile("dream_ta.txt")
+   sound("dream1.wav",3)
+   txtfile("dream_ta.txt")
+elseif index = 6 then
+   sound("dream_eva.wav",3)
+   txtfile("johnny.txt")
 endif
 'print index
 sleep
