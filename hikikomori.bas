@@ -1,86 +1,86 @@
-#include once ".\FBTrueType\FBTrueType.bi"
-#include ".\fbsound-1.1\inc\fbsound_dynamic.bi"
-windowtitle("HIKIKOMORI GAME")
-randomize timer
-dim shared as integer timePass
-redim shared newsbla(0) as string
-dim shared as integer hWave
-dim shared counter as integer 
-dim shared songcounter as integer
+#INCLUDE ONCE ".\FBTrueType\FBTrueType.bi"
+#INCLUDE ".\fbsound-1.1\inc\fbsound_dynamic.bi"
+WINDOWTITLE("HIKIKOMORI GAME")
+RANDOMIZE TIMER
+DIM SHARED AS INTEGER timePass
+REDIM SHARED newsbla(0) AS STRING
+DIM SHARED AS INTEGER hWave
+DIM SHARED counter AS INTEGER, index AS INTEGER
+DIM SHARED songcounter AS INTEGER
 
-type PERSON
-	public:
-	dim intext as string
+TYPE PERSON
+	PUBLIC:
+	DIM intext AS STRING
 	CONST punctuation = "?!,.:;<>(){}[]"
-	dim Greeting AS STRING
-	dim You AS STRING
-	dim Script AS String
-	dim kCnt AS INTEGER
-	dim rCnt AS INTEGER
-	dim wCnt AS INTEGER
-	dim NoKeyFoundIndex AS INTEGER
+	DIM Greeting AS STRING
+	DIM You AS STRING
+	DIM Script AS STRING
+	DIM kCnt AS INTEGER
+	DIM rCnt AS INTEGER
+	DIM wCnt AS INTEGER
+	DIM NoKeyFoundIndex AS INTEGER
 	REDIM keywords(0) AS STRING
-	redim replies(0) AS STRING
-	redim wordIn(0) AS STRING
-	redim wordOut(0) AS STRING
+	REDIM replies(0) AS STRING
+	REDIM wordIn(0) AS STRING
+	REDIM wordOut(0) AS STRING
 	REDIM rStarts(0) AS INTEGER
-	redim rEnds(0) AS INTEGER
-	redim rIndex(0) AS INTEGER
+	REDIM rEnds(0) AS INTEGER
+	REDIM rIndex(0) AS INTEGER
 	
 	
-	declare SUB sAppend (arr() AS STRING, item AS STRING)
-	declare SUB nAppend (arr() AS INTEGER, item AS INTEGER)
-	declare SUB LoadArrays (scriptFile AS STRING)
-	declare FUNCTION isolatePunctuation (s AS STRING) as string
-	declare FUNCTION joinPunctuation (s AS STRING) as String
-	declare FUNCTION GetReply (rply2 as string, switch as integer) as string
-	declare SUB speakTotext (lines as string)
-end type
+	DECLARE SUB sAppend (arr() AS STRING, item AS STRING)
+	DECLARE SUB nAppend (arr() AS INTEGER, item AS INTEGER)
+	DECLARE SUB LoadArrays (scriptFile AS STRING)
+	DECLARE FUNCTION isolatePunctuation (s AS STRING) AS STRING
+	DECLARE FUNCTION joinPunctuation (s AS STRING) AS STRING
+	DECLARE FUNCTION GetReply (rply2 AS STRING, switch AS INTEGER) AS STRING
+	DECLARE SUB speakTotext (lines AS STRING)
+END TYPE
 
 
-'append to the string array the string item
+'APPEND TO the STRING array the STRING item
 SUB sAppend (arr() AS STRING, item AS STRING)
-    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
+    REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
     arr(UBOUND(arr)) = item
-end sub
-'append to the integer array the integer item
+END SUB
+'APPEND TO the INTEGER array the INTEGER item
 SUB nAppend (arr() AS INTEGER, item AS INTEGER)
-    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
+    REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
     arr(UBOUND(arr)) = item
-end sub
+END SUB
 
-'append to the string array the string item
+'APPEND TO the STRING array the STRING item
 SUB PERSON.sAppend (arr() AS STRING, item AS STRING)
-    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
+    REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) + 1) AS STRING
     arr(UBOUND(arr)) = item
 END SUB
 
-'append to the integer array the integer item
+'APPEND TO the INTEGER array the INTEGER item
 SUB PERSON.nAppend (arr() AS INTEGER, item AS INTEGER)
-    REDIM Preserve arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
+    REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
     arr(UBOUND(arr)) = item
 END SUB
 
-' pull data out of some script file
+' pull DATA OUT of some script file
 SUB PERSON.LoadArrays (scriptFile AS STRING)
     DIM startR AS INTEGER, endR AS INTEGER, ReadingR AS INTEGER, temp AS INTEGER
     DIM fline AS STRING, kWord AS STRING
     OPEN scriptFile FOR INPUT AS #1
-    WHILE Not EOF(1)
+    WHILE NOT EOF(1)
         LINE INPUT #1, fline
         SELECT CASE LEFT(fline, 2)
-           CASE "g:": Greeting = Trim(MID(fline, 3))
-           CASE "y:": You = Trim(MID(fline, 3))
-           CASE "c:": Script = Trim(MID(fline, 3))
+           CASE "g:": Greeting = TRIM(MID(fline, 3))
+           CASE "y:": You = TRIM(MID(fline, 3))
+           CASE "c:": Script = TRIM(MID(fline, 3))
             CASE "s:"
                 wCnt = wCnt + 1: temp = INSTR(fline, ">")
                 IF temp THEN
-                    this.sAppend wordIn(), " " + Trim(MID(fline, 3, temp - 3)) + " "
-                    this.sAppend wordOut(), " " + Trim(MID(fline, temp + 1)) + " "
+                    THIS.sAppend wordIn(), " " + TRIM(MID(fline, 3, temp - 3)) + " "
+                    THIS.sAppend wordOut(), " " + TRIM(MID(fline, temp + 1)) + " "
                 END IF
             CASE "r:"
                 rCnt = rCnt + 1
-                this.sAppend replies(), Trim(MID(fline, 3))
+                THIS.sAppend replies(), TRIM(MID(fline, 3))
                 IF NOT ReadingR THEN
                     ReadingR = -1
                     startR = rCnt
@@ -92,11 +92,11 @@ SUB PERSON.LoadArrays (scriptFile AS STRING)
                 END IF
                 IF rCnt THEN
                     kCnt = kCnt + 1
-                    kWord = Trim(MID(fline, 3))
-                    this.sAppend keywords(), " " + kWord + " "
-                    this.nAppend rStarts(), startR
-                    this.nAppend rIndex(), startR
-                    this.nAppend rEnds(), endR
+                    kWord = TRIM(MID(fline, 3))
+                    THIS.sAppend keywords(), " " + kWord + " "
+                    THIS.nAppend rStarts(), startR
+                    THIS.nAppend rIndex(), startR
+                    THIS.nAppend rEnds(), endR
                     IF kWord = "nokeyfound" THEN NoKeyFoundIndex = kCnt
                 END IF
             CASE "e:": EXIT WHILE
@@ -106,17 +106,17 @@ SUB PERSON.LoadArrays (scriptFile AS STRING)
     IF ReadingR THEN 'handle last bits
         endR = rCnt
         kCnt = kCnt + 1
-        this.sAppend keywords(), "nokeyfound"
-        this.nAppend rStarts(), startR
-        this.nAppend rIndex(), startR
-        this.nAppend rEnds(), endR
+        THIS.sAppend keywords(), "nokeyfound"
+        THIS.nAppend rStarts(), startR
+        THIS.nAppend rIndex(), startR
+        THIS.nAppend rEnds(), endR
         NoKeyFoundIndex = kCnt
     END IF
 END SUB
 
 
-FUNCTION PERSON.isolatePunctuation (s AS STRING) as string
-    'isolate punctuation so when we look for key words they don't interfere
+FUNCTION PERSON.isolatePunctuation (s AS STRING) AS STRING
+    'isolate punctuation so when we look FOR key words they don't interfere
     DIM b AS STRING, i AS INTEGER
     b = ""
     FOR i = 1 TO LEN(s)
@@ -125,7 +125,7 @@ FUNCTION PERSON.isolatePunctuation (s AS STRING) as string
     isolatePunctuation = b
 END FUNCTION
 
-FUNCTION PERSON.joinPunctuation (s AS STRING) as String
+FUNCTION PERSON.joinPunctuation (s AS STRING) AS STRING
     'undo isolatePuntuation$
     DIM b AS STRING, find AS STRING, i AS INTEGER, place AS INTEGER
     b = s
@@ -142,13 +142,13 @@ FUNCTION PERSON.joinPunctuation (s AS STRING) as String
         WEND
     NEXT
     joinPunctuation = b
-END Function
+END FUNCTION
 
-' =============================== here is the heart of ELIZA / Player function
-FUNCTION PERSON.GetReply (rply2 as string, switch as integer) as string
+' =============================== here IS the heart of ELIZA / Player FUNCTION
+FUNCTION PERSON.GetReply (rply2 AS STRING, switch AS INTEGER) AS STRING
     DIM inpt AS STRING, tail AS STRING, answ AS STRING
     DIM kFlag AS INTEGER, k AS INTEGER, kFound AS INTEGER, l AS INTEGER, w AS INTEGER
-	if switch = 0 then
+	IF switch = 0 THEN
 		
 	' USER INPUT SECTION
 	rply2 = ""
@@ -156,18 +156,18 @@ FUNCTION PERSON.GetReply (rply2 as string, switch as integer) as string
     IF LCASE(inpt) = "q" OR LCASE(inpt) = "x" OR LCASE(inpt) = "goodbye" OR LCASE(inpt) = "good night" OR LCASE(inpt) = "bye" THEN
         GetReply = "Goodbye!": EXIT FUNCTION
     END IF
-	else
+	ELSE
     inpt = rply2
 	endif
-    inpt = " " + inpt + " " '<< need this because keywords embedded in spaces to ID whole words only
-    inpt = this.isolatePunctuation(inpt)
-    FOR k = 1 TO kCnt 'loop through key words until we find a match
+    inpt = " " + inpt + " " '<< need THIS because keywords embedded in spaces TO ID whole words only
+    inpt = THIS.isolatePunctuation(inpt)
+    FOR k = 1 TO kCnt 'LOOP through key words UNTIL we find a match
         kFound = INSTR(LCASE(inpt), LCASE(keywords(k)))
-        IF kFound > 0 THEN '>>> need the following for * in some replies
+        IF kFound > 0 THEN '>>> need the following FOR * in some replies
             tail = " " + MID(inpt, kFound + LEN(keywords(k)))
             FOR l = 1 TO LEN(tail) 'DO NOT USE INSTR
-                FOR w = 1 TO wCnt 'swap words in tail if used there
-                    IF LCASE(MID(tail, l, LEN(wordIn(w)))) = LCASE(wordIn(w)) THEN 'swap words exit for
+                FOR w = 1 TO wCnt 'SWAP words in tail IF used there
+                    IF LCASE(MID(tail, l, LEN(wordIn(w)))) = LCASE(wordIn(w)) THEN 'SWAP words EXIT FOR
                         tail = MID(tail, 1, l - 1) + wordOut(w) + MID(tail, l + LEN(wordIn(w)))
                         EXIT FOR
                     END IF
@@ -179,86 +179,86 @@ FUNCTION PERSON.GetReply (rply2 as string, switch as integer) as string
     NEXT
     IF kFlag = 0 THEN k = NoKeyFoundIndex
     answ = replies(INT((rEnds(k) - rStarts(k) + 1) * RND) + rStarts(k))
-    'set pointer to next reply in rIndex array
-    IF k = NoKeyFoundIndex THEN 'let's not get too predictable for most used set of replies
+    'set POINTER TO NEXT reply in rIndex array
+    IF k = NoKeyFoundIndex THEN 'LET's NOT GET too predictable FOR most used set of replies
         rIndex(k) = INT((rEnds(k) - rStarts(k) + 1) * RND) + rStarts(k)
         'ELSE
-        '    rIndex(k) = rIndex(k) + 1 'set next reply index then check it
+        '    rIndex(k) = rIndex(k) + 1 'set NEXT reply index THEN check it
         '    IF rIndex(k) > rEnds(k) THEN rIndex(k) = rStarts(k)
     END IF
-    IF RIGHT(answ, 1) <> "*" THEN GetReply = answ: EXIT FUNCTION 'oh so the * signal an append to reply!
-    If Trim(tail) = "" THEN
-        GetReply = "Please elaborate on, " + keywords(k)
+    IF RIGHT(answ, 1) <> "*" THEN GetReply = answ: EXIT FUNCTION 'oh so the * signal an APPEND TO reply!
+    IF TRIM(tail) = "" THEN
+        GetReply = "Please elaborate ON, " + keywords(k)
     ELSE
-        tail = this.joinPunctuation(tail)
+        tail = THIS.joinPunctuation(tail)
         GetReply = MID(answ, 1, LEN(answ) - 1) + tail
     END IF
 END FUNCTION
 
-sub slow (text as String )
-   DIM as integer speed(0 to 4) => {50,100,20,300,250}
-   for i as integer = 1 to len(text)
-      print mid(text, i, 1);
-      SLEEP speed(INT(RND*ubound(speed))) 
-   next
-end sub
+SUB slow (text AS STRING )
+   DIM AS INTEGER speed(0 TO 4) => {50,100,20,300,250}
+   FOR i AS INTEGER = 1 TO LEN(text)
+      PRINT MID(text, i, 1);
+      SLEEP speed(INT(RND*UBOUND(speed))) 
+   NEXT
+END SUB
 
-SUB PERSON.speakTotext (lines as string) 'uses voice command line voice.exe
-    PRINT Script & ": ";:slow  lines :print
+SUB PERSON.speakTotext (lines AS STRING) 'uses voice COMMAND LINE voice.exe
+    PRINT Script & ": ";:slow  lines :PRINT
 
-END Sub
+END SUB
 
-sub conversation(file as String)
-   dim i as Integer
+SUB conversation(file AS STRING)
+   DIM i AS INTEGER
    'restart()
-   dim kenzu as PERSON
+   DIM kenzu AS PERSON
 '   sound("./icq-horn.wav")
-   cls
-   for i = 1 to 10
-      locate 5, 5
-      print "             ";
-      sleep 250
-      locate 5, 5
-      print "connecting...";
-      sleep 250
-   next
-   cls
+   CLS
+   FOR i = 1 TO 10
+      LOCATE 5, 5
+      PRINT "             ";
+      SLEEP 250
+      LOCATE 5, 5
+      PRINT "connecting...";
+      SLEEP 250
+   NEXT
+   CLS
    DIM rply AS STRING
-   dim rply3 as string'              for main loop
-   kenzu.LoadArrays file '   check file load, OK checks out
+   DIM rply3 AS STRING'              FOR main LOOP
+   kenzu.LoadArrays file '   check file load, OK checks OUT
    PRINT kenzu.Greeting: PRINT '           start testing main Eliza code
    DO
       rply = kenzu.GetReply(rply3, 0)
       PRINT: kenzu.speakTotext rply
    LOOP UNTIL rply = "Goodbye!"
-   cls
-   locate 5, 5
-   print "disconnected...  "
-   sleep
-end sub
+   CLS
+   LOCATE 5, 5
+   PRINT "disconnected...  "
+   SLEEP
+END SUB
 
 SUB chatroom()
-	dim i as Integer
+	DIM i AS INTEGER
    
-   dim guide as PERSON
+   DIM guide AS PERSON
    DIM mike AS PERSON
    DIM ken AS PERSON
 
-   cls
-   for i = 1 to 10
-      locate 5, 5
-      print "             ";
-      sleep 250
-      locate 5, 5
-      print "connecting...";
-      sleep 250
-   next
-   cls
+   CLS
+   FOR i = 1 TO 10
+      LOCATE 5, 5
+      PRINT "             ";
+      SLEEP 250
+      LOCATE 5, 5
+      PRINT "connecting...";
+      SLEEP 250
+   NEXT
+   CLS
 	DIM in AS STRING
    DIM rply AS STRING
-   dim rply2 as string'              for main loop
+   DIM rply2 AS STRING'              FOR main LOOP
    DIM rply3 AS STRING
-   guide.LoadArrays "yuka_guide.txt" '   check file load, OK checks out
+   guide.LoadArrays "yuka_guide.txt" '   check file load, OK checks OUT
    mike.LoadArrays "mike.txt"
    ken.LoadArrays "ken.txt"
    PRINT guide.Greeting: PRINT '           start testing main Eliza code
@@ -266,7 +266,7 @@ SUB chatroom()
       PRINT: PRINT guide.You + ": ";: LINE INPUT "", in
     IF LCASE(in) = "q" OR LCASE(in) = "x" OR LCASE(in) = "goodbye" OR LCASE(in) = "good night" OR LCASE(in) = "bye" THEN
 	PRINT: PRINT: guide.speakTotext "Goodbye!"
-	EXIT do
+	EXIT DO
 	ENDIF
 	rply = guide.GetReply(in, 1)
 	PRINT: guide.speakTotext rply
@@ -276,48 +276,48 @@ SUB chatroom()
 	PRINT: ken.speakTotext rply3
       
    LOOP UNTIL in = "bye"
-   cls
-   locate 5, 5
-   print "disconnected...  "
-   sleep
+   CLS
+   LOCATE 5, 5
+   PRINT "disconnected...  "
+   SLEEP
 
 
 
 END SUB
 
-sub cp (row as integer, s as string)
+SUB cp (row AS INTEGER, s AS STRING)
 
-locate row, (100 - len(s)) / 2:print s
+LOCATE row, (100 - LEN(s)) / 2:PRINT s
 
-end sub
+END SUB
 
-function _
+FUNCTION _
   getKeys( _
-    byref keysToCatch as const string ) _
-  as string
+    BYREF keysToCatch AS CONST STRING ) _
+  AS STRING
 
-  dim as string _
+  DIM AS STRING _
     k
 
-  do
-    k => inkey()
+  DO
+    k => INKEY()
 
-    sleep( 1, 1 )
-  loop until( inStr( keysToCatch, k ) )
+    SLEEP( 1, 1 )
+  LOOP UNTIL( INSTR( keysToCatch, k ) )
 
-  '' Clear keyboard buffer
-  do while( len( inkey() ) > 0 )
-    sleep( 1, 1 )
-  loop
+  '' CLEAR keyboard buffer
+  DO WHILE( LEN( INKEY() ) > 0 )
+    SLEEP( 1, 1 )
+  LOOP
 
-  return( k )
-end Function
+  RETURN( k )
+END FUNCTION
 
 
 
-Function dates1 (months As Integer) As String
-  dim as const string _
-    monthNames(0 To 11) => { _
+FUNCTION dates1 (months AS INTEGER) AS STRING
+  DIM AS CONST STRING _
+    monthNames(0 TO 11) => { _
       "January", _
       "February", _
       "March", _
@@ -331,127 +331,131 @@ Function dates1 (months As Integer) As String
       "November", _
       "December" }
 
-    dim as integer _
-      m => ( months + 11 ) mod 12
+    DIM AS INTEGER _
+      m => ( months + 11 ) MOD 12
 
-    return( monthNames( m ) & "," & str( int( ( months - 1 ) / 12 ) + 1997 ) )
-END Function
+    RETURN( monthNames( m ) & "," & STR( INT( ( months - 1 ) / 12 ) + 1997 ) )
+END FUNCTION
 
-SUB upper (f as string)
-	cls
-	redim lines(0) as string
-	dim h as long = freefile()
-	dim as integer r =35,c =30
-	dim fline as string
+SUB upper (f AS STRING)
+	CLS
+	REDIM lines(0) AS STRING
+	DIM h AS LONG = FREEFILE()
+	DIM AS INTEGER r =35,c =30
+	DIM fline AS STRING
 	OPEN f FOR INPUT AS #h
-	WHILE Not EOF(h)
+	WHILE NOT EOF(h)
         LINE INPUT #h, fline
 		sAppend lines(), fline		
-    wend
-	close #h
+    WEND
+	CLOSE #h
 
-	dim as integer hi = hiword(width()) 'num columns on display
-   'print closing credits
-   for i as integer = 0 to ubound(lines)
-      locate hi, 10
-      print lines(i)
-      sleep 500
-   next
-   'clear screen
-   for i as integer = 1 to hi
-      print
-      sleep 500
-   next
-   print "End"
-	getkey()
-end sub
+	DIM AS INTEGER hi = HIWORD(WIDTH()) 'num columns ON display
+   'PRINT closing credits
+   FOR i AS INTEGER = 0 TO UBOUND(lines)
+      LOCATE hi, 10
+      PRINT lines(i)
+      SLEEP 500
+   NEXT
+   'CLEAR SCREEN
+   FOR i AS INTEGER = 1 TO hi
+      PRINT
+      SLEEP 500
+   NEXT
+   PRINT "END"
+	GETKEY()
+END SUB
 
-sub news()
-dim l as string, h as integer
-h = freefile()
-dim k as string
-cls
-open "news.txt" for input as #h
-while not eof(h)
-line input #h, l
+SUB news()
+DIM l AS STRING, h AS INTEGER
+h = FREEFILE()
+DIM k AS STRING
+CLS
+OPEN "news.txt" FOR INPUT AS #h
+WHILE NOT EOF(h)
+LINE INPUT #h, l
 sappend newsbla(), l
-wend
-close #h
-print "PRESS 'q' OR ESC TO STOP"
-do
-print newsbla(int(rnd* (ubound(newsbla)+1)))
-print
-sleep 3000
-k = inkey()
-loop until k = chr(27) or k = "q"
-end sub
+WEND
+CLOSE #h
+PRINT "PRESS 'q' OR ESC TO STOP"
+'for i as integer = 1 to 1000
+'print (int(rnd* (ubound(newsbla))));
+'next 
+'sleep
+DO
+PRINT newsbla(INT(RND* (UBOUND(newsbla)+1)))
+PRINT
+SLEEP 3000
+k = INKEY()
+LOOP UNTIL k = CHR(27) OR k = "q"
+END SUB
 
-sub txtfile(f as string)
-cls
-	dim as string buffer
-	dim h as long = freefile()
-	open f for binary as #h
-	buffer = space(lof(h))
-	get #h,,buffer
-	close #h
+SUB txtfile(f AS STRING)
+CLS
+	DIM AS STRING buffer
+	DIM h AS LONG = FREEFILE()
+	OPEN f FOR BINARY AS #h
+	buffer = SPACE(LOF(h))
+	GET #h,,buffer
+	CLOSE #h
 
-	print buffer
-	sleep
+	PRINT buffer
+	SLEEP
 	fbs_Destroy_Wave(@hWave)
-end sub
+END SUB
 
 
 
-Sub sound(f As String, t as integer)
-	Dim as boolean ok
+SUB sound(f AS STRING, t AS INTEGER)
+	DIM AS BOOLEAN ok
 	ok=fbs_Init()
-'	Dim as integer hWave
+'	DIM AS INTEGER hWave
 	fbs_Load_WAVFile(f,@hWave)
 	fbs_Play_Wave(hWave, t)
-	if inkey<>"" then
+	IF INKEY<>"" THEN
       fbs_Destroy_Wave(@hWave)
    endif
-end sub
+END SUB
 
-sub email()
-	dim k as string
+SUB email()
+	DIM k AS STRING
 	
-	cls
-	if counter = 0 then
+	CLS
+	IF counter = 0 THEN
 		cp 5, "NO EMAIL..."
 		counter += 1
-'	sleep
-	elseif counter = 1 then
+'	SLEEP
+	ELSEIF counter = 1 THEN
 		sound("email1.wav",1)
 		txtfile("email1.txt")
-		print
-		print
-		print "1. REPLY OR 2. IGNORE"
+		PRINT
+		PRINT
+		PRINT "1. REPLY OR 2. IGNORE"
 	k = getKeys("12")
-			if k = "2" then
-			exit sub
-		elseif k = "1" then
-			print
-			print
-			print "YOU REPLY TO YUKA-YUKA CENTRE"
+			IF k = "2" THEN
+			EXIT SUB
+		ELSEIF k = "1" THEN
+			PRINT
+			PRINT
+			PRINT "YOU REPLY TO YUKA-YUKA CENTRE"
 			counter += 1
 		endif
 	endif
-	sleep
-end sub
+	SLEEP
+END SUB
 
 
-sub guitar()
+SUB guitar()
 
-if songcounter = 0 then
+IF songcounter = 0 THEN
 sound("pray_song.wav",1)
 txtfile("guitar1.txt")
 songcounter += 1
-elseif songcounter = 1 then
+ELSEIF songcounter = 1 THEN
 sound("love_song.wav",1)
 txtfile("guitar2.txt")
 songcounter += 1
-elseif songcounter = 2 then
+ELSEIF songcounter = 2 THEN
 sound("blues_song.wav", 1)
 txtfile("guitar3.txt")
 
@@ -459,105 +463,112 @@ txtfile("guitar3.txt")
 
 endif
 
-end sub
+END SUB
 
 
-sub dreams()
-'dim as integer numbers(0 to 2) => {0,1,2}
-dim index as integer
-index = (int(rnd*(7)))
-cls
-if index = 0 then
+SUB dreams()
+'DIM AS INTEGER numbers(0 TO 2) => {0,1,2}
+'DIM index AS INTEGER
+'index = (INT(RND*(7)))
+CLS
+IF index = 0 THEN
    sound("dream1.wav", 3)
    txtfile("dream.txt")
-elseif index = 1 then
+   index += 1
+ELSEIF index = 1 THEN
    sound("dream2.wav",3)
    txtfile("dream2.txt")
-elseif index = 2 then
+   index += 1
+ELSEIF index = 2 THEN
    sound("walk1.wav", 3)
    txtfile("dream3.txt")
-elseif index = 3 then
+   index += 1
+ELSEIF index = 3 THEN
    txtfile("nightmare1.txt")
-elseif index = 4 then
+   index += 1
+ELSEIF index = 4 THEN
    sound("eddie.wav", 3)
    txtfile("eddie.txt")
+   index += 1
 ELSEIF index = 5 THEN
    sound("dream1.wav",3)
    txtfile("dream_ta.txt")
-elseif index = 6 then
+   index += 1
+ELSEIF index = 6 THEN
    sound("dream_eva.wav",3)
    txtfile("johnny.txt")
+   index = 0
 endif
-'print index
-sleep
-end sub
+'PRINT index
+SLEEP
+END SUB
 
-sub music()
-cls
-sound(".\fbsound-1.1\data\fbsloop44.wav", 5)
+SUB music()
+CLS
+sound(".\fbsound-1.1\DATA\fbsloop44.wav", 5)
 txtfile("music.txt")
-sleep
-end sub
+SLEEP
+END SUB
 
-sub outside()
+SUB outside()
 sound("walk1.wav", 2)
 txtfile("walk1.txt")
 
-end sub
+END SUB
 
-sub warningscreen()
-screen 19
-dim k as string
+SUB warningscreen()
+SCREEN 19
+DIM k AS STRING
 txtfile("warning.txt")
 k = getKeys("12")
-if k = "2" then
-end
+IF k = "2" THEN
+END
 endif
-end sub
+END SUB
 
 
-sub opening()
+SUB opening()
 
-screenres 800, 600, 32
+SCREENRES 800, 600, 32
 sound("sabrina.wav", 2)
-Dim As Any Ptr bild
-Dim As string datei
-Dim As Integer breite, hoehe
+DIM AS ANY PTR bild
+DIM AS STRING datei
+DIM AS INTEGER breite, hoehe
 
 datei = "hikpic.bmp"
 breite = 800
 hoehe = 600
 
-bild = ImageCreate(breite, hoehe, 0)
-BLoad datei, bild
-Put (0, 0), bild, PSet
+bild = IMAGECREATE(breite, hoehe, 0)
+BLOAD datei, bild
+PUT (0, 0), bild, PSET
 
-Sleep
+SLEEP
 
-ImageDestroy(bild)
+IMAGEDESTROY(bild)
 
-var font = FontLoad(".\fonts\Montserrat-Bold.ttf")
+VAR font = FontLoad(".\fonts\Montserrat-Bold.ttf")
 
-dim as string word = "A GAME BY RON77"
-dim s as string = "HIKIKOMORY"
+DIM AS STRING word = "A GAME BY RON77"
+DIM s AS STRING = "HIKIKOMORY"
 
-TTPrint font, 300 , 150, s,rgb(0, 255, 0), 50
+TTPrint font, 300 , 150, s,RGB(0, 255, 0), 50
 
-ttprint font , 250, 200, word, rgb(0,80,255), 50
+ttprint font , 250, 200, word, RGB(0,80,255), 50
 
 
-sleep
+SLEEP
 
-end sub
+END SUB
 
-sub main()
-screen 19
+SUB main()
+SCREEN 19
 txtfile("startpoint.txt")
-sleep
-dim k as string
+SLEEP
+DIM k AS STRING
 DO
 exitif:
-cls
+CLS
 cp 2, "DATE: " & dates1(timePass)
 cp 4, "WHAT DO YOU WANT TO DO?"
 cp 6, "1. GO TO SLEEP..."
@@ -571,37 +582,37 @@ cp 20, "8. PLAY SOMETHING WITH YOUR GUITAR..."
 cp 22, "9. LISTEN TO THE NEWS..."
 cp 24, "PRESS ESC TO EXIT GAME..."
 k = getkeys("123456789" + CHR(27))
-if k = "9" then
+IF k = "9" THEN
 news()
-elseif k = "3" then
+ELSEIF k = "3" THEN
 music()
-elseif k ="1" then
+ELSEIF k ="1" THEN
 'timePass += 1
-'goto exitif
+'GOTO exitif
 dreams()
-elseif k = "5" then
+ELSEIF k = "5" THEN
 outside()
-elseif k ="4" then
+ELSEIF k ="4" THEN
 email()
-elseif k = "2" then
+ELSEIF k = "2" THEN
 'playvideo("pacman.mp4")
-shell("start https://www.youtube.com/watch?v=-CbyAk3Sn9I&t=15s")
-elseif k = "6" then
+SHELL("start https://www.youtube.com/watch?v=-CbyAk3Sn9I&t=15s")
+ELSEIF k = "6" THEN
 'conversation("chat1.txt")
 chatroom()
-elseif k = "8" then
+ELSEIF k = "8" THEN
 guitar()
-end if
+END IF
 
 
 
 
 timePass += 1
-LOOP UNTIL k = chr(27)
+LOOP UNTIL k = CHR(27)
 
-end sub
+END SUB
 
 warningscreen()
 opening()
 main()
-upper("ending_titles.txt")
+upper("ending_titles.txt") 
