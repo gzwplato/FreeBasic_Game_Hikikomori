@@ -1,19 +1,20 @@
 [Project]
 Version=3
-Description=freebasic game
+Description=hikikomori_game
 Api=fb (FreeBASIC)
 Grouping=1
 AddMainFiles=1
 AddModuleFiles=1
 ResExport=
 CompileIfNewer=0
-IncVersion=0
+IncVersion=1
 RunCmd=0
 [Make]
-Recompile=0
 Module=Module Build,fbc -c
+Recompile=0
 Current=1
-1=,
+1=Windows Console,fbc -s console
+2=,
 Output=
 Run=
 Delete=
@@ -94,4 +95,4 @@ Main=1
 4=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 3=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 2=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-1=0,75,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1=0,74,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
