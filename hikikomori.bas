@@ -1,10 +1,10 @@
-#INCLUDE ONCE ".\FBTrueType\FBTrueType.bi"
+#Include ONCE ".\FBTrueType\FBTrueType.bi"
 #INCLUDE ".\fbsound-1.1\inc\fbsound_dynamic.bi"
 WINDOWTITLE("HIKIKOMORI GAME")
 RANDOMIZE TIMER
 DIM SHARED AS INTEGER timePass
 REDIM SHARED newsbla(0) AS STRING
-DIM SHARED AS INTEGER hWave
+'DIM SHARED AS long hWave
 DIM SHARED counter AS INTEGER  ', index AS INTEGER
 DIM SHARED songcounter AS INTEGER
 
@@ -399,18 +399,19 @@ SUB txtfile(f AS STRING)
 	GET #h ,  , buffer
 	CLOSE #h
 	PRINT buffer
-	SLEEP
-	fbs_Destroy_Wave(@hWave)
+	'SLEEP
+	'fbs_Destroy_Wave(@hWave)
 END SUB
 
 
 SUB SOUND(f AS STRING , t AS INTEGER)
 	DIM AS BOOLEAN ok
 	ok = fbs_Init()
-	'DIM AS INTEGER hWave
+	DIM AS Integer hWave
 	fbs_Load_WAVFile(f , @hWave)
 	fbs_Play_Wave(hWave , t)
-	
+	Sleep
+	fbs_Destroy_Wave(@hWave)
 END SUB
 
 SUB email()
@@ -422,8 +423,9 @@ SUB email()
         counter += 1
         'SLEEP
     ELSEIF counter = 1 THEN
-        SOUND("email1.wav" , 1)
         txtfile("email1.txt")
+        SOUND("email1.wav" , 1)
+        
         PRINT
         PRINT
         PRINT "1. REPLY OR 2. IGNORE"
@@ -444,24 +446,24 @@ END SUB
 SUB guitar()
 	
 	IF songcounter = 0 THEN
-        SOUND("pray_song.wav" , 1)
         txtfile("guitar1.txt")
+        SOUND("pray_song.wav" , 1)
         songcounter += 1
     ELSEIF songcounter = 1 THEN
-        SOUND("love_song.wav" , 1)
         txtfile("guitar2.txt")
+        SOUND("love_song.wav" , 1)
         songcounter += 1
     ELSEIF songcounter = 2 THEN
-        SOUND("blues_song.wav" , 1)
         txtfile("guitar3.txt")
+        SOUND("blues_song.wav" , 1)
         songcounter += 1
     ELSEIF songcounter = 3 THEN
-        SOUND("pray_song2.wav" , 1)
         txtfile("pray2.txt")
+        SOUND("pray_song2.wav" , 1)
         songcounter += 1
     ELSEIF songcounter = 4 THEN
-        SOUND("guitar_song.wav" , 1)
         txtfile("guitar4.txt")
+        SOUND("guitar_song.wav" , 1)
         songcounter = 0
     END IF
 	
@@ -473,22 +475,24 @@ SUB dreams()
 	DIM AS STRING dream(0 TO 6) = > {"dream.txt" , "dream2.txt" , "dream3.txt" , "nightmare1.txt" , "eddie.txt" , "dream_ta.txt" , "johnny.txt"}
 	DIM AS STRING dreamMusic(0 TO 4) = > {"dream1.wav" , "dream2.wav" , "walk1.wav" , "eddie.wav" , "dream_eva.wav"}
 	CLS
-	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic) + 1))) , 3)
 	txtfile(dream(INT(RND * (UBOUND(dream) + 1))))
-	
+	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic) + 1))) , 3)
+		
 	SLEEP
 END SUB
 
 SUB music()
 	CLS
-	SOUND(".\fbsound-1.1\DATA\fbsloop44.wav" , 5)
 	txtfile("music.txt")
+	SOUND(".\fbsound-1.1\DATA\fbsloop44.wav" , 5)
+	
 	SLEEP
 END SUB
 
 SUB outside()
-	SOUND("walk1.wav" , 2)
 	txtfile("walk1.txt")
+	SOUND("walk1.wav" , 2)
+	
 	
 END SUB
 
@@ -506,7 +510,7 @@ END SUB
 SUB opening()
 	
 	SCREENRES 800 , 600 , 32
-	SOUND("sabrina.wav" , 2)
+	'SOUND("sabrina.wav" , 2)
 	DIM AS ANY PTR bild
 	DIM AS STRING datei
 	DIM AS INTEGER breite , hoehe
@@ -520,7 +524,7 @@ SUB opening()
 	PUT(0 , 0) , bild , PSET
 	
 	SLEEP
-	
+	'SOUND("sabrina.wav" , 2)
 	IMAGEDESTROY(bild)
 	
 	VAR Font = FontLoad(".\fonts\Montserrat-Bold.ttf")
@@ -532,7 +536,7 @@ SUB opening()
 	
 	ttprint Font , 250 , 200 , WORD , RGB(0 , 80 , 255) , 50
 	
-	
+	SOUND("sabrina.wav" , 2)
 	SLEEP
 	
 END SUB
