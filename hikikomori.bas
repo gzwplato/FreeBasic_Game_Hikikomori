@@ -7,6 +7,12 @@ REDIM SHARED newsbla(0) AS STRING
 'DIM SHARED AS long hWave
 DIM SHARED counter AS INTEGER  ', index AS INTEGER
 DIM SHARED songcounter AS INTEGER
+ReDim Shared places(0) As String
+ReDim Shared colors(0) As String
+ReDim Shared metaphore(0) As String
+ReDim Shared objects(0) As String
+ReDim Shared good(0) As String
+ReDim Shared bad(0) As String
 
 TYPE PERSON
     PUBLIC  :
@@ -337,6 +343,33 @@ FUNCTION dates1(months AS INTEGER) AS STRING
 	RETURN(monthNames(m) & "," & STR(INT((months - 1) / 12) + 1997))
 END FUNCTION
 
+Sub LOAD(filename As String)
+	Dim h As Integer = FreeFile()
+	Dim fline As String
+	Open filename For Input As #h
+	While Not Eof(h)
+		Line Input #h, fline
+		Select Case Left(fline, 2)
+			Case "p:": sAppend places(), Trim(Mid(fline,3))
+			Case "c:": sAppend colors(), Trim(Mid(fline,3))
+			Case "m:": sAppend metaphore(), Trim(Mid(fline,3))
+			Case "o:": sAppend objects(), Trim(Mid(fline,3))
+			Case "g:": sAppend good(), Trim(Mid(fline,3))
+			Case "b:": sAppend bad(), Trim(Mid(fline,3))
+			Case "e:": Exit while	
+		End Select
+	Wend
+End Sub
+
+Sub RESTART
+	ReDim places(0) As String
+	ReDim colors(0) As String
+	ReDim metaphore(0) As String
+	ReDim objects(0) As String
+	ReDim good(0) As String
+	ReDim bad(0) As String
+End Sub
+
 SUB upper(f AS STRING)
 	CLS
 	REDIM lines(0) AS STRING
@@ -413,6 +446,27 @@ SUB SOUND(f AS STRING , t AS INTEGER)
 	Sleep
 	fbs_Destroy_Wave(@hWave)
 END SUB
+
+Sub poem()
+	DIM AS STRING dreamMusic(0 TO 4) = > {"dream1.wav" , "dream2.wav" , "walk1.wav" , "eddie.wav" , "dream_eva.wav"}
+	Cls
+	RESTART()
+	LOAD("poemDB.txt")
+	
+	cp 1, "A POEM..."
+	For i As Integer = 1 To 3
+		Print
+		Print places(Int(Rnd*(ubound(places)+1)))
+		Print colors(Int(Rnd*(UBound(colors)+1)))
+		Print metaphore(Int(Rnd*(UBound(metaphore)+1)))
+		Print objects(Int(Rnd*(UBound(objects)+1)))
+		Print good(Int(Rnd*(UBound(good)+1)))
+		Print bad(Int(Rnd(UBound(bad)+1)))
+	Next
+	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic) + 1))) , 3)
+	sleep	
+End Sub
+
 
 SUB email()
 	DIM k AS STRING
@@ -557,7 +611,7 @@ SUB main()
         cp 12 , "4. CHECK E-MAIL..."
         cp 14 , "5. GO OUTSIDE..."
         cp 16 , "6. JOIN A CHAT-ROOM ON THE NET..."
-        cp 18 , "7. READ A BOOK..."
+        cp 18 , "7. WRITE A POEM..."
         cp 20 , "8. PLAY SOMETHING WITH YOUR GUITAR..."
         cp 22 , "9. LISTEN TO THE NEWS..."
         cp 24 , "PRESS ESC TO EXIT GAME..."
@@ -583,8 +637,10 @@ SUB main()
             ELSEIF counter = 2 THEN
                 chatroom()
             END IF
-        ELSEIF k = "8" THEN
+        ELSEIF k = "8" Then
             guitar()
+        ElseIf k = "7" Then
+        	poem()
         END IF
         
         
