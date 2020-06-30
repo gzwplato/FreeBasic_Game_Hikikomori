@@ -14,6 +14,10 @@ ReDim Shared objects(0) As String
 ReDim Shared good(0) As String
 ReDim Shared bad(0) As String
 
+'DIM AS BOOLEAN ok
+'ok = fbs_Init()
+
+
 TYPE PERSON
     PUBLIC  :
     DIM intext AS STRING
@@ -69,11 +73,12 @@ END SUB
 
 'pull DATA OUT of some script file
 SUB PERSON.LoadArrays(scriptFile AS STRING)
+	Dim h As Integer = FreeFile()
 	DIM startR AS INTEGER , endR AS INTEGER , ReadingR AS INTEGER , temp AS INTEGER
 	DIM fline AS STRING , kWord AS STRING
-	OPEN scriptFile FOR INPUT AS #1
-	WHILE NOT EOF(1)
-        LINE INPUT #1 , fline
+	OPEN scriptFile FOR INPUT AS #h
+	WHILE NOT EOF(h)
+        LINE INPUT #h , fline
         SELECT CASE LEFT(fline , 2)
         CASE "g:"  :  Greeting = TRIM(MID(fline , 3))
         CASE "y:"  :  You = TRIM(MID(fline , 3))
@@ -108,7 +113,7 @@ END IF
 CASE "e:"  :  EXIT WHILE
 END SELECT
 WEND
-CLOSE #1
+CLOSE #h
 IF ReadingR THEN  'handle last bits
 	endR = rCnt
 	kCnt = kCnt + 1
@@ -359,6 +364,7 @@ Sub LOAD(filename As String)
 			Case "e:": Exit while	
 		End Select
 	Wend
+	Close #h
 End Sub
 
 Sub RESTART
@@ -438,8 +444,8 @@ END SUB
 
 
 SUB SOUND(f AS STRING , t AS INTEGER)
-	DIM AS BOOLEAN ok
-	ok = fbs_Init()
+	'DIM AS BOOLEAN ok
+	'ok = fbs_Init()
 	DIM AS Integer hWave
 	fbs_Load_WAVFile(f , @hWave)
 	fbs_Play_Wave(hWave , t)
@@ -648,6 +654,11 @@ SUB main()
     LOOP UNTIL k = CHR(27)
 	
 END SUB
+
+if fbs_Init()=false then
+  print "error: FBS_INIT() " & FBS_Get_PlugError()
+  beep : sleep : end 1
+end if
 
 warningscreen()
 opening()
