@@ -2,7 +2,7 @@
 #INCLUDE ".\fbsound-1.1\inc\fbsound_dynamic.bi"
 WINDOWTITLE("HIKIKOMORI GAME")
 RANDOMIZE TIMER
-DIM SHARED AS INTEGER timePass
+DIM SHARED AS INTEGER timePass, meetingCounter
 REDIM SHARED newsbla(0) AS STRING
 'DIM SHARED AS long hWave
 DIM SHARED counter AS INTEGER  ', index AS INTEGER
@@ -519,7 +519,10 @@ SUB email()
             PRINT
             PRINT "YOU REPLY TO YUKA-YUKA CENTER"
             counter += 1
-        END IF
+        END If
+	ElseIf counter = 2 Then
+		txtfile("email2.txt")
+		SOUND("email1.wav", 1)
     END IF
 	SLEEP
 END SUB
@@ -572,9 +575,33 @@ SUB music()
 END SUB
 
 SUB outside()
-	txtfile("walk1.txt")
-	SOUND("walk1.wav" , 2)
-	
+	Dim k As String
+	Dim meetings(0 To 1) As String => {"meeting1.txt", "meeting2.txt"}
+	If counter < 2 Then
+		txtfile("walk1.txt")
+		SOUND("walk1.wav" , 2)
+	ElseIf counter = 2 Then
+		txtfile("yuka.txt")
+		SOUND("dream_eva.wav", 3)
+		Print
+		Print
+		Print "1. YOU NEED TO THINK ABOUT IT"
+		Print "2. YES YOU WOULD LIKE TO TRY AND PARTICIPATE"
+		k = getKeys("12")
+		If k = "1" Then
+			Exit Sub
+		ElseIf k = "2" THEN
+			Print
+			Print "THE GUIDE SHAKES YOUR HAND AND SAY 'THEN SEE YOU NEXT TIME' AND SMILE"
+			counter += 1
+		EndIf
+		Sleep
+	ElseIf counter = 3 Then
+		txtfile(meetings(meetingcounter))
+		SOUND("dream_eva.wav", 3)
+		meetingcounter +=1
+		If meetingcounter > 1 Then meetingcounter = 0
+	End If
 	
 END SUB
 
