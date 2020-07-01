@@ -45,8 +45,14 @@ TYPE PERSON
 	DECLARE FUNCTION joinPunctuation(s AS STRING) AS STRING
 	DECLARE FUNCTION GetReply(rply2 AS STRING , switch AS INTEGER) AS STRING
 	DECLARE SUB speakTotext(lines AS STRING)
+	Declare Sub RESTART()
 END TYPE
 
+
+
+Function rnd_range (first As Double, last As Double) As Double
+    Function = Rnd * (last - first) + first
+End Function
 
 'APPEND TO the STRING array the STRING item
 SUB sAppend(arr() AS STRING , Item AS STRING)
@@ -70,6 +76,17 @@ SUB PERSON.nAppend(arr() AS INTEGER , Item AS INTEGER)
 	REDIM PRESERVE arr(LBOUND(arr) TO UBOUND(arr) + 1) AS INTEGER
 	arr(UBOUND(arr)) = Item
 END SUB
+
+Sub person.restart
+	REDIM keywords(0) AS STRING
+    REDIM replies(0) AS STRING
+    REDIM wordIn(0) AS STRING
+    REDIM wordOut(0) AS STRING
+    REDIM rStarts(0) AS INTEGER
+    REDIM rEnds(0) AS INTEGER
+    REDIM rIndex(0) AS Integer
+	
+End Sub
 
 'pull DATA OUT of some script file
 SUB PERSON.LoadArrays(scriptFile AS STRING)
@@ -225,6 +242,7 @@ SUB conversation(file AS STRING)
 	DIM i AS INTEGER
 	'restart()
 	DIM kenzu AS PERSON
+	kenzu.restart()
 	'sound("./icq-horn.wav")
 	CLS
 	FOR i = 1 TO 10
@@ -256,7 +274,9 @@ SUB chatroom()
 	DIM guide AS PERSON
 	DIM mike AS PERSON
 	DIM ken AS PERSON
-	
+	guide.restart()
+	mike.restart()
+	ken.restart()
 	CLS
 	FOR i = 1 TO 10
         LOCATE 5 , 5
@@ -422,7 +442,7 @@ SUB news()
 	'NEXT
 	'SLEEP
 	DO
-        PRINT newsbla(INT(RND * (UBOUND(newsbla) + 1)))
+        PRINT newsbla(INT(RND * (UBOUND(newsbla))+1))
         PRINT
         SLEEP 3000
         k = INKEY()
@@ -438,14 +458,10 @@ SUB txtfile(f AS STRING)
 	GET #h ,  , buffer
 	CLOSE #h
 	PRINT buffer
-	'SLEEP
-	'fbs_Destroy_Wave(@hWave)
-END SUB
+End SUB
 
 
 SUB SOUND(f AS STRING , t AS INTEGER)
-	'DIM AS BOOLEAN ok
-	'ok = fbs_Init()
 	DIM AS Integer hWave
 	fbs_Load_WAVFile(f , @hWave)
 	fbs_Play_Wave(hWave , t)
@@ -462,12 +478,18 @@ Sub poem()
 	cp 1, "A POEM..."
 	For i As Integer = 1 To 3
 		Print
-		Print places(Int(Rnd*(ubound(places)+1)))
-		Print colors(Int(Rnd*(UBound(colors)+1)))
-		Print metaphore(Int(Rnd*(UBound(metaphore)+1)))
-		Print objects(Int(Rnd*(UBound(objects)+1)))
-		Print good(Int(Rnd*(UBound(good)+1)))
-		Print bad(Int(Rnd(UBound(bad)+1)))
+		Print places(Int(Rnd * (UBound(places))+1))
+		
+		Print colors(Int(Rnd *(UBound(colors))+1))
+		
+		Print metaphore(Int(Rnd *(UBound(metaphore))+1))
+		
+		Print objects(Int(Rnd *(UBound(objects))+1))
+		
+		Print good(Int(Rnd *(UBound(good))+1))
+		
+		Print bad(Int(Rnd *(UBound(bad))+1))
+		
 	Next
 	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic) + 1))) , 3)
 	sleep	
@@ -535,8 +557,8 @@ SUB dreams()
 	DIM AS STRING dream(0 TO 6) = > {"dream.txt" , "dream2.txt" , "dream3.txt" , "nightmare1.txt" , "eddie.txt" , "dream_ta.txt" , "johnny.txt"}
 	DIM AS STRING dreamMusic(0 TO 4) = > {"dream1.wav" , "dream2.wav" , "walk1.wav" , "eddie.wav" , "dream_eva.wav"}
 	CLS
-	txtfile(dream(INT(RND * (UBOUND(dream) + 1))))
-	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic) + 1))) , 3)
+	txtfile(dream(INT(RND * (UBOUND(dream)+1))))
+	SOUND(dreamMusic(INT(RND * (UBOUND(dreammusic)+1))) , 3)
 		
 	SLEEP
 END SUB
