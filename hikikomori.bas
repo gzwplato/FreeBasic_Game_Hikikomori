@@ -14,10 +14,6 @@ ReDim Shared objects(0) As String
 ReDim Shared good(0) As String
 ReDim Shared bad(0) As String
 
-'DIM AS BOOLEAN ok
-'ok = fbs_Init()
-
-
 TYPE PERSON
     PUBLIC  :
     DIM intext AS STRING
@@ -568,11 +564,26 @@ END SUB
 
 SUB music()
 	CLS
+	If counter < 2 Then
 	txtfile("music.txt")
 	SOUND(".\fbsound-1.1\DATA\fbsloop44.wav" , 5)
-	
-	SLEEP
-END SUB
+	ElseIf counter >= 2 Then
+		dim hWave As Integer
+		Color 0, 15
+		Cls
+		txtfile("music3.txt")
+		fbs_Load_OGGFile(".\fbsound-1.1\DATA\legends.ogg",@hWave)
+		fbs_Play_Wave(hWave)
+		'while fbs_Get_PlayingSounds()=0:sleep 10:Wend
+		Sleep
+		fbs_Destroy_Wave(@hWave)
+		
+		
+	End If
+	Sleep
+	color 15,0
+	Cls
+End SUB
 
 SUB outside()
 	Dim k As String
