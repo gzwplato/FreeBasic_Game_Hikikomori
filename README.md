@@ -1,18 +1,18 @@
-# FreeBasic_Game_Hikikomori
+# freebasic_game_hikikomori
 a freebasic game 
 
-IN THIS GAME THE PLAYER PLAYS AN ISOLATED YOUNG PERSON A HIKIKOMORI... AND TRIES TO
-BRAKE THE ISOLATION AND GET BACK TO SOCIETY.
-ON THE WAY THE PLAYER GETS TO KNOW THE CHARACTER HE IS PLAYING AND THE PAST THAT HUNTS HIM
-WHETHER PLAYING MUSIC OR WRITING POEMS OR DREAMING AT NIGHT OR CHATTING ONLINE OR PARTICIPATING
-IN SUPPORT GROUPS TILL EVENTUALLY GOING TO A WORKSHOP AND LEARNING A SKILL AND GETTING A JOB AND INCOME
-SO HE CAN BE INDEPENDENT AND RENT A PLACE OF HIS OWN... THIS GAME IS MEANT TO OPEN UP AND EMULATE
-THE HIKIKOMORI PHENOMENON AND BRING TO LIFE THE DIFFICULTIES AND CHOICES OF ISOLATED PEOPLE
-TO SHADE SOME LIGHT TO THE SELF ISOLATED PEOPLE...
+in this game the player plays an isolated young person a hikikomori... and tries to
+brake the isolation and get back to society.
+on the way the player gets to know the character he is playing and the past that hunts him
+whether playing music or writing poems or dreaming at night or chatting online or participating
+in support groups till eventually going to a workshop and learning a skill and getting a job and income
+so he can be independent and rent a place of his own... this game is meant to open up and emulate
+the hikikomori phenomenon and bring to life the difficulties and choices of isolated people
+to shade some light to the self isolated people...
 
-THIS GAME IS IN FREEBASIC TESTED ON WINDOWS MACHINE. IT USES MANY WAVE FILES AND TEXT FILES
-IT IS A NO GRAPHICS CONSOLE ONLY TEXT BASED GAME
-ALL CHARACTERS AND PLOTS IN THIS GAME ARE FICTIONAL
-THIS GAME IS NOT MEANT FOR SENSITIVE PEOPLE OR FOR MINORS UNDER AGE 18
-THERE IS NO NSFW CONTENT HOWEVER THIS GAME DEALS WITH UNPLEASANT FEELINGS SUCH AS:
-SOCIAL REJECTION, SOCIAL ISOLATION, ANTI SOCIAL FEELINGS ETC...
+this game is in freebasic tested on windows machine. it uses many wave files and text files
+it is a no graphics console only text based game
+all characters and plots in this game are fictional
+this game is not meant for sensitive people or for minors under age 18
+there is no nsfw content however this game deals with unpleasant feelings such as:
+social rejection, social isolation, anti social feelings etc...
