@@ -13,7 +13,7 @@ ReDim Shared metaphore(0) As String
 ReDim Shared objects(0) As String
 ReDim Shared good(0) As String
 ReDim Shared bad(0) As String
-
+Dim Shared finished As boolean = FALSE
 TYPE PERSON
     PUBLIC  :
     DIM intext AS STRING
@@ -519,6 +519,9 @@ SUB email()
 	ElseIf counter = 2 Then
 		txtfile("email2.txt")
 		SOUND("email1.wav", 1)
+	ElseIf counter = 3 Then
+		txtfile("email3.txt")
+		SOUND("email1.wav", 1)
     END IF
 	SLEEP
 END SUB
@@ -587,7 +590,7 @@ End SUB
 
 SUB outside()
 	Dim k As String
-	Dim meetings(0 To 1) As String => {"meeting1.txt", "meeting2.txt"}
+	Dim meetings(0 To 3) As String => {"meeting1.txt", "meeting2.txt", "meeting3.txt", "meeting4.txt"}
 	If counter < 2 Then
 		txtfile("walk1.txt")
 		SOUND("walk1.wav" , 2)
@@ -611,7 +614,13 @@ SUB outside()
 		txtfile(meetings(meetingcounter))
 		SOUND("dream_eva.wav", 3)
 		meetingcounter +=1
-		If meetingcounter > 1 Then meetingcounter = 0
+		If meetingcounter > 3 Then counter = 4
+	ElseIf counter = 4 Then
+		Color 0, 15
+		Cls
+		txtfile("workshop.txt")
+		SOUND("dream_eva.wav", 3)
+		finished = TRUE
 	End If
 	
 END SUB
@@ -700,7 +709,7 @@ SUB main()
         ELSEIF k = "6" THEN
             IF counter < 2 THEN
                 conversation("chat1.txt")
-            ELSEIF counter = 2 THEN
+            ELSEIF counter >= 2 THEN
                 chatroom()
             END IF
         ELSEIF k = "8" Then
@@ -711,7 +720,7 @@ SUB main()
         
         
         timePass += 1
-    LOOP UNTIL k = CHR(27)
+	LOOP UNTIL k = CHR(27) Or finished = TRUE 
 	
 END SUB
 
