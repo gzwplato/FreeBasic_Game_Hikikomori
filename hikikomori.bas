@@ -1,4 +1,4 @@
-#Include ONCE ".\FBTrueType\FBTrueType.bi"
+#INCLUDE ONCE ".\FBTrueType\FBTrueType.bi"
 #INCLUDE ".\fbsound-1.1\inc\fbsound_dynamic.bi"
 WINDOWTITLE("HIKIKOMORI GAME")
 RANDOMIZE TIMER
