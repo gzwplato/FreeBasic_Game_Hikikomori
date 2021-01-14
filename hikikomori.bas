@@ -705,7 +705,7 @@ SUB main()
             email()
         ELSEIF k = "2" THEN
             'playvideo("pacman.mp4")
-            SHELL("start https://www.youtube.com/watch?v=-CbyAk3Sn9I&t=15s")
+            SHELL("start https://youtu.be/-CbyAk3Sn9I")
         ELSEIF k = "6" THEN
             IF counter < 2 THEN
                 conversation("chat1.txt")
