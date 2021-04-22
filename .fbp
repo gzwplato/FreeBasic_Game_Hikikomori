@@ -14,12 +14,14 @@ Module=Module Build,fbc -c
 Recompile=0
 Current=2
 1=Windows Console (debug),fbc -g -s console
-2=Windows Console,fbc -s console
-3=,
+2=Windows GUI,fbc -s gui
+3=Windows Console,fbc -s console
+4=,
 Output=
 Run=
 Delete=
 [TabOrder]
+TabOrder=1
 [File]
 1=hikikomori.bas
 2=chat1.txt
@@ -105,7 +107,7 @@ Main=1
 4=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 3=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 2=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-1=0,707,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+1=0,707,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 25=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 27=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 26=0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
